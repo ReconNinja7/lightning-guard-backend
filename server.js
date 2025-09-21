@@ -13,7 +13,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: "*" }));
+app.use(cors());
+app.options("*", cors());
+
 app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
