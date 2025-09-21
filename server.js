@@ -13,7 +13,16 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// ✅ CORS fix: allow Firebase frontend to connect
+app.use(cors({
+  origin: "https://lightning-guard.web.app",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"]
+}));
+
+app.options("*", cors());
+
 app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
