@@ -8,13 +8,12 @@ import Tesseract from "tesseract.js";
 import fsPromises from "fs/promises";
 import path from "path";
 import os from "os";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai@latest";
 
 dotenv.config();
 
 const app = express();
 
-// ✅ CORS fix: allow Firebase frontend to connect
 app.use(cors({
   origin: "https://lightning-guard.web.app",
   methods: ["GET", "POST", "OPTIONS"],
@@ -31,7 +30,7 @@ if (!process.env.GEMINI_API_KEY) {
   console.warn("⚠️ GEMINI_API_KEY not set in .env — set GEMINI_API_KEY to call Gemini.");
 }
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-let GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-flash";
+let GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-flash-latest";
 function getModel() {
   return genAI.getGenerativeModel({ model: GEMINI_MODEL });
 }
@@ -361,8 +360,8 @@ app.post("/api/analyze-text", async (req, res) => {
     return res.json({ ok: true, result: final, ...final });
   } catch (err) {
     console.error("Error in /api/analyze-text:", err);
-    if (err?.status === 429 && GEMINI_MODEL !== "gemini-1.5-flash") {
-      GEMINI_MODEL = "gemini-1.5-flash";
+    if (err?.status === 429 && GEMINI_MODEL !== "gemini-1.5-flash-latest") {
+      GEMINI_MODEL = "gemini-1.5-flash-latest";
       return res.status(503).json({ ok: false, error: "Quota exceeded on PRO, switched to FLASH. Retry shortly." });
     }
     return res.status(500).json({ error: "Failed to analyze text" });
