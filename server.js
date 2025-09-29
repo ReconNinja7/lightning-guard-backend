@@ -8,7 +8,7 @@ import Tesseract from "tesseract.js";
 import fsPromises from "fs/promises";
 import path from "path";
 import os from "os";
-import { GoogleGenerativeAI } from "@google/generative-ai@latest";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 dotenv.config();
 
