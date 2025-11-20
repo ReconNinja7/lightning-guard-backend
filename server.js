@@ -31,7 +31,8 @@ if (!process.env.GEMINI_API_KEY) {
 }
 const genAI = new GoogleGenerativeAI({
   apiKey: process.env.GEMINI_API_KEY,
-  apiEndpoint: "https://generativelanguage.googleapis.com/v1"
+  apiEndpoint: "https://generativelanguage.googleapis.com/v1beta"
+
 });
 
 let GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-flash-latest";
